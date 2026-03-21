@@ -1,24 +1,27 @@
-import Image from "next/image"
-import { prisma } from "@/lib/prisma"
+import { Trash2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import { prisma } from "@/lib/prisma";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
+import { deleteTrip } from "./octions";
 
 export default async function Home() {
   const trips = await prisma.trip.findMany({
-    orderBy: { startDate: 'asc' } // Сортируем поездки по дате
-  })
+    orderBy: { startDate: "asc" }, // Сортируем поездки по дате
+  });
 
   return (
     <main className="p-8 max-w-6xl mx-auto">
       <h1 className="text-4xl font-bold mb-8 tracking-tight font-sans">
         My Weekend Trips
       </h1>
-      
+
       {/* Сетка: 1 колонка на мобилках, 2 на планшетах, 3 на десктопах */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {trips.map((trip) => (
@@ -38,28 +41,45 @@ export default async function Home() {
                 </div>
               )}
             </div>
-            
-            {/* Текстовая часть карточки */}
-            <CardHeader>
-              <CardTitle className="line-clamp-1">{trip.title}</CardTitle>
-              <CardDescription>{trip.location}</CardDescription>
+
+            <CardHeader className="flex flex-row items-start justify-between space-y-0">
+              <div className="space-y-1">
+                <CardTitle className="line-clamp-1">{trip.title}</CardTitle>
+                <CardDescription>{trip.location}</CardDescription>
+              </div>
+
+              {/* Форма для удаления поездки */}
+              <form
+                action={async () => {
+                  "use server";
+                  await deleteTrip(trip.id);
+                }}
+              >
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </form>
             </CardHeader>
             <CardContent className="mt-auto pb-6 text-sm text-muted-foreground">
-               {/* Форматируем даты, чтобы они выглядели красиво */}
-               {new Intl.DateTimeFormat('en-US', {
-                 month: 'short',
-                 day: 'numeric',
-                 year: 'numeric'
-               }).format(trip.startDate)} 
-               {" - "} 
-               {new Intl.DateTimeFormat('en-US', {
-                 month: 'short',
-                 day: 'numeric'
-               }).format(trip.endDate)}
+              {/* Форматируем даты, чтобы они выглядели красиво */}
+              {new Intl.DateTimeFormat("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              }).format(trip.startDate)}
+              {" - "}
+              {new Intl.DateTimeFormat("en-US", {
+                month: "short",
+                day: "numeric",
+              }).format(trip.endDate)}
             </CardContent>
           </Card>
         ))}
       </div>
     </main>
-  )
+  );
 }

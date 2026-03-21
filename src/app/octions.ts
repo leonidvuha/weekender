@@ -24,3 +24,12 @@ export async function createTrip(formData: FormData) {
   // This tells Next.js to refresh the homepage and show the new trip
   revalidatePath("/")
 }
+export async function deleteTrip(id: string) {
+  // Physical removal from the database
+  await prisma.trip.delete({
+    where: { id }
+  })
+
+  // Refresh the page to show the trip is gone
+  revalidatePath("/")
+}
