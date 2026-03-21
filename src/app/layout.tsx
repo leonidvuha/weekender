@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { AddTripDialog } from "@/components/AddTripDialog";
 
 // Подключаем современный шрифт Inter (золотой стандарт веба)
 const inter = Inter({ subsets: ["latin"] });
@@ -25,6 +26,7 @@ export default function RootLayout({
           <div className="max-w-6xl mx-auto px-8 h-16 flex items-center justify-between">
             <div className="font-bold text-xl tracking-tight">Weekender.</div>
             {/* Сюда мы позже добавим кнопку "Add Trip" */}
+            <AddTripDialog />
           </div>
         </header>
 
