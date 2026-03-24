@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌍 Weekender
 
-## Getting Started
+A modern, full-stack web application designed to help users seamlessly plan and manage their weekend getaways.
 
-First, run the development server:
+This project was built to demonstrate modern web development practices, including Server Side Rendering (SSR), secure authentication, database management, and responsive UI design using the Next.js App Router.
 
-```bash
+## ✨ Features
+
+- **Secure Authentication:** Credential-based login and registration system using Auth.js with `bcrypt` password hashing.
+- **Private Dashboards:** Protected routes ensuring users can only view, create, and manage their own trip data.
+- **Full-Stack Server Actions:** Secure data mutation and retrieval without writing traditional API routes.
+- **Database Integration:** Serverless PostgreSQL database management using Prisma ORM.
+- **Modern UI/UX:** Clean, accessible, and highly responsive interface built with Tailwind CSS and `shadcn/ui`.
+
+## 🛠️ Tech Stack
+
+- **Framework:** [Next.js](https://nextjs.org/) (App Router)
+- **Language:** [TypeScript](https://www.typescriptlang.org/)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/) & [shadcn/ui](https://ui.shadcn.com/)
+- **Database:** PostgreSQL ([Neon](https://neon.tech/))
+- **ORM:** [Prisma](https://www.prisma.io/)
+- **Authentication:** [Auth.js](https://authjs.dev/) (NextAuth beta)
+- **Deployment:** [Vercel](https://vercel.com)
+
+## 🚀 Getting Started
+
+To run this project locally, follow these steps:
+
+### 1. Clone the repository
+
+\`\`\`bash
+git clone https://github.com/YOUR_GITHUB_USERNAME/weekender.git
+cd weekender
+\`\`\`
+
+### 2. Install dependencies
+
+\`\`\`bash
+npm install
+\`\`\`
+
+### 3. Set up environment variables
+
+Create a `.env` file in the root directory and add the following keys:
+\`\`\`env
+
+# Your PostgreSQL database connection string
+
+DATABASE_URL="postgresql://user:password@host/db?sslmode=require"
+
+# Secret key for JWT encryption (generate any random string)
+
+AUTH_SECRET="your-super-secret-key"
+\`\`\`
+
+### 4. Initialize the database
+
+Push the Prisma schema to your database to create the required tables:
+\`\`\`bash
+npx prisma db push
+\`\`\`
+
+### 5. Run the development server
+
+\`\`\`bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
+\`\`\`
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🤝 Author
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Your Name** - [GitHub Profile](https://github.com/leonidvuha)
