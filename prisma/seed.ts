@@ -3,45 +3,15 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 async function main() {
-  await prisma.trip.deleteMany()
-
-  await prisma.trip.createMany({
-    data: [
-      {
-        title: "Weekend in Europa-Park",
-        location: "Rust, Germany",
-        startDate: new Date("2026-05-15T10:00:00Z"),
-        endDate: new Date("2026-05-17T18:00:00Z"),
-        // Надежная ссылка на парк развлечений
-        imageUrl: "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?q=80&w=800&auto=format&fit=crop"
-      },
-      {
-        title: "City trip to Strasbourg",
-        location: "Strasbourg, France",
-        startDate: new Date("2026-06-12T09:00:00Z"),
-        endDate: new Date("2026-06-14T20:00:00Z"),
-        // Надежная ссылка на европейский город
-        imageUrl: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?q=80&w=800&auto=format&fit=crop"
-      },
-      {
-        title: "Relaxing at Lake Constance",
-        location: "Meersburg, Germany",
-        startDate: new Date("2026-07-20T10:00:00Z"),
-        endDate: new Date("2026-07-22T16:00:00Z"),
-        // Надежная ссылка на озеро и природу
-        imageUrl: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=800&auto=format&fit=crop"
-      }
-    ]
-  })
-  
-  console.log("✅ Database successfully seeded with NEW test trips!")
+  console.log("Seeding is no longer needed. We create trips via the UI now!")
 }
 
 main()
-  .catch((e) => {
-    console.error("❌ Error while seeding database:", e)
-    process.exit(1)
-  })
-  .finally(async () => {
+  .then(async () => {
     await prisma.$disconnect()
+  })
+  .catch(async (e) => {
+    console.error(e)
+    await prisma.$disconnect()
+    process.exit(1)
   })
