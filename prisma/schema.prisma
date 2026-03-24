@@ -12,7 +12,13 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
+model User {
+  id       String  @id @default(cuid())
+  email    String  @unique
+  password String
+  name     String?
+  trips    Trip[]  // Связь: у одного пользователя может быть много поездок
+}
 
 model Trip {
   id          String   @id @default(cuid())
@@ -24,4 +30,7 @@ model Trip {
   
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  userId    String   // Каждая карточка теперь хранит ID своего владельца
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+

@@ -9,12 +9,28 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { deleteTrip } from "./octions";
+import { deleteTrip } from "./actions";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
+  // 1. Фейсконтроль: проверяем электронный пропуск
+  const session = await auth()
+
+  // 2. Если пропуска нет — выгоняем на страницу входа
+  if (!session?.user?.id) {
+    redirect("/login")
+  }
+
+  // 3. Достаем поездки ТОЛЬКО для этого пользователя, чтобы никто чужой случайно не удалил ваши планы на выходные!
   const trips = await prisma.trip.findMany({
-    orderBy: { startDate: "asc" }, // Сортируем поездки по дате
-  });
+    where: {
+      userId: session.user.id,
+    },
+    orderBy: {
+      startDate: "asc", 
+    },
+  })
 
   return (
     <main className="p-8 max-w-6xl mx-auto">

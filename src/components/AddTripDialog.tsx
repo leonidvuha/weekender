@@ -10,7 +10,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { createTrip } from "@/app/octions";
+import { createTrip } from "@/app/actions";
 
 export function AddTripDialog() {
   const [open, setOpen] = useState(false);
