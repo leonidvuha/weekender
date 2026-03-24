@@ -14,23 +14,19 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 
 export default async function Home() {
-  // 1. Фейсконтроль: проверяем электронный пропуск
-  const session = await auth()
+  const session = await auth();
 
-  // 2. Если пропуска нет — выгоняем на страницу входа
   if (!session?.user?.id) {
-    redirect("/login")
+    redirect("/login");
   }
-
-  // 3. Достаем поездки ТОЛЬКО для этого пользователя, чтобы никто чужой случайно не удалил ваши планы на выходные!
   const trips = await prisma.trip.findMany({
     where: {
       userId: session.user.id,
     },
     orderBy: {
-      startDate: "asc", 
+      startDate: "asc",
     },
-  })
+  });
 
   return (
     <main className="p-8 max-w-6xl mx-auto">
@@ -38,11 +34,9 @@ export default async function Home() {
         My Weekend Trips
       </h1>
 
-      {/* Сетка: 1 колонка на мобилках, 2 на планшетах, 3 на десктопах */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {trips.map((trip) => (
           <Card key={trip.id} className="overflow-hidden flex flex-col">
-            {/* Блок с картинкой */}
             <div className="relative h-48 w-full bg-muted">
               {trip.imageUrl ? (
                 <Image
@@ -64,7 +58,6 @@ export default async function Home() {
                 <CardDescription>{trip.location}</CardDescription>
               </div>
 
-              {/* Форма для удаления поездки */}
               <form
                 action={async () => {
                   "use server";
@@ -81,7 +74,6 @@ export default async function Home() {
               </form>
             </CardHeader>
             <CardContent className="mt-auto pb-6 text-sm text-muted-foreground">
-              {/* Форматируем даты, чтобы они выглядели красиво */}
               {new Intl.DateTimeFormat("en-US", {
                 month: "short",
                 day: "numeric",
